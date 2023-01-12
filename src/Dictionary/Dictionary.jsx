@@ -19,13 +19,12 @@ const Dictionary = () => {
     },
   });
 
-  const fetchDictionaryApi = useCallback(async () => {
-    const res = await axios.get(
-      `https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`
-    );
-
-    setMeanings(res.data);
-  }, [word, language]);
+  const fetchDictionaryApi = async () => {
+    await axios
+      .get(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`)
+      .then((res) => setMeanings(res.data))
+      .catch((err) => setMeanings([]));
+  };
 
   const handleWordChange = (value) => {
     setWord(value);
@@ -37,8 +36,8 @@ const Dictionary = () => {
   };
 
   useEffect(() => {
-    fetchDictionaryApi();
-  }, [fetchDictionaryApi]);
+    word && fetchDictionaryApi();
+  }, [word]);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -73,7 +72,12 @@ const Dictionary = () => {
             onLanguageChange={handleLanguageChange}
             darkMode={darkMode}
           />
-          <Definition darkMode={darkMode} results={meanings} word={word} />
+          <Definition
+            darkMode={darkMode}
+            results={meanings}
+            word={word}
+            language={language}
+          />
         </Container>
       </div>
     </ThemeProvider>
