@@ -13,17 +13,20 @@ const Definition = ({ darkMode, word, results, language }) => {
       }}
     >
       {results[0] && word && language === "en" && (
-        <audio
-          src={results[0]?.phonetics[0]?.audio}
-          controls
-          style={{
-            width: "100%",
-            backgroundColor: "#fff",
-            borderRadius: "20px",
-          }}
-        >
-          Your browser does not support audio.
-        </audio>
+        <div>
+          <audio
+            src={results[0]?.phonetics[0]?.audio}
+            controls
+            style={{
+              display: "flex",
+              width: "100%",
+              backgroundColor: "#fff",
+              borderRadius: "20px",
+            }}
+          >
+            Your browser does not support audio.
+          </audio>
+        </div>
       )}
       {!word ? (
         <span>Type in serach box to see the meaning...</span>
